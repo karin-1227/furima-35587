@@ -16,7 +16,7 @@
 ### Association
 - has_many :items
 - has_many :comments
-- has_one :purchase_management
+- has_many :purchase_management
 
 ## items テーブル
 
@@ -32,7 +32,7 @@
 | price              | integer | null: false |
 
 ### Association
-- belongs_to :user
+- belongs_to :user, foreign_key: true
 - has_one :comments
 - has_one :purchase_management 
 
@@ -59,7 +59,7 @@
 
 ### Association
 
-- has_one :purchase_management
+- belongs_to :purchase_management, foreign_key: true
 
 ## purchase_management テーブル
 | Column | Type       | Options                        |
@@ -70,6 +70,6 @@
 ### Association
 - belongs_to :user
 - belongs_to :item
-- belongs_to :purchase
+- has_one :purchase
 
 
