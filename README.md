@@ -16,7 +16,7 @@
 ### Association
 - has_many :items
 - has_many :comments
-- has_many :purchase
+- has_one :purchase_management
 
 ## items テーブル
 
@@ -34,7 +34,7 @@
 ### Association
 - belongs_to :user
 - has_one :comments
-- has_one :purchase
+- has_one :purchase_management 
 
 ## comments テーブル
 
@@ -43,8 +43,8 @@
 | text   |text    | null: false |
 
 ### Association
-- belongs_to :users
-- belongs_to :items
+- belongs_to :user
+- belongs_to :item
 
 ## purchase テーブル
 
@@ -70,3 +70,6 @@
 ### Association
 - belongs_to :user
 - belongs_to :item
+- belongs_to :purchase
+
+
