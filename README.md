@@ -2,16 +2,16 @@
 
 ## users テーブル
 
-| Column           | Type   | Options     |
-| ---------------- | ------ | ----------- |
-| name             | string | null: false |
-| email            | string | null: false |
-| password         | string | null: false |
-| family_name      | string | null: false |
-| first_name       | string | null: false |
-| family_name_kana | string | null: false |
-| first_name_kana  | string | null: false |
-| birthday         | date   | null: false |
+| Column             | Type   | Options     |
+| ------------------ | ------ | ----------- |
+| name               | string | null: false |
+| email              | string | null: false  unique: true|
+| encrypted_password | string | null: false |
+| family_name        | string | null: false |
+| first_name         | string | null: false |
+| family_name_kana   | string | null: false |
+| first_name_kana    | string | null: false |
+| birthday           | date   | null: false |
 
 ### Association
 - has_many :items
@@ -20,16 +20,16 @@
 
 ## items テーブル
 
-| Column           | Type    | Options     |
-| ---------------- | ------  | ----------- |
-| images           | string  | null: false |
-| items_name       | string  | null: false |
-| description      | text    | null: false |
-| category         | string  | null: false |
-| states           | string  | null: false |
-| shipping_charges | string  | null: false |
-| delivery_area    | string  | null: false |
-| price            | numeric | null: false |
+| Column             | Type    | Options     |
+| ------------------ | ------  | ----------- |
+| items_name         | string  | null: false |
+| description        | text    | null: false |
+| category_id        | integer | null: false |
+| state_id           | integer | null: false |
+| shipping_charge_id | integer | null: false |
+| prefectures_id     | integer | null: false |
+| days_to_ship_id    | integer | null: false |
+| price              | numeric | null: false |
 
 ### Association
 - belongs_to :users
@@ -48,18 +48,24 @@
 
 ## purchase テーブル
 
-| Column           | Type   | Options     |
-| ---------------- | ------ | ----------- |
-| card_number      | numeric | null: false |
-| expiration_month | date    | null: false |
-| expiration_date  | date    | null: false |
-| security_code    | numeric | null: false |
-| postal_code      | numeric | null: false |
-| prefectures      | string  | null: false |
+| Column           | Type    | Options     |
+| ---------------- | ------- | ----------- |
+| postal_code      | string  | null: false |
+| prefectures_id   | integer | null: false |
 | municipality     | string  | null: false |
 | address          | string  | null: false |
 | building_name    | string  |             |
-| phone_number     | numeric | null: false |
+| phone_number     | string  | null: false |
+
+### Association
+- belongs_to :users
+- belongs_to :items
+
+## purchase_management テーブル
+| Column | Type       | Options                        |
+| ------ | ---------- | ------------------------------ |
+| user   | references | null: false, foreign_key: true |
+| item   | references | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :users
