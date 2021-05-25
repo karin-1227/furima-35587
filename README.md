@@ -29,12 +29,12 @@
 | shipping_charge_id | integer | null: false |
 | prefectures_id     | integer | null: false |
 | days_to_ship_id    | integer | null: false |
-| price              | numeric | null: false |
+| price              | integer | null: false |
 
 ### Association
-- belongs_to :users
-- has_many :comments
-- has_many :purchase
+- belongs_to :user
+- has_one :comments
+- has_one :purchase
 
 ## comments テーブル
 
@@ -58,8 +58,8 @@
 | phone_number     | string  | null: false |
 
 ### Association
-- belongs_to :users
-- belongs_to :items
+
+- has_one :purchase_management
 
 ## purchase_management テーブル
 | Column | Type       | Options                        |
@@ -68,5 +68,5 @@
 | item   | references | null: false, foreign_key: true |
 
 ### Association
-- belongs_to :users
-- belongs_to :items
+- belongs_to :user
+- belongs_to :item
