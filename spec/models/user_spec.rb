@@ -11,8 +11,8 @@ RSpec.describe User, type: :model do
       expect(@user).to be_valid
       end
       it 'passwordとpassword_confirmationが6文字以上であれば登録できる' do
-        @user.password = '000000'
-        @user.password_confirmation = '000000'
+        @user.password = '00000a'
+        @user.password_confirmation = '00000a'
         expect(@user).to be_valid
       end
     end
@@ -79,6 +79,44 @@ RSpec.describe User, type: :model do
         @user.email = 'test'
         @user.valid?
         expect(@user.errors.full_messages).to include "Email is invalid"
+      end
+      it 'passwordは英字だけでは登録できない' do
+          @user.password = 'aaaaaa'
+          @user.password_confirmation = 'aaaaaa'
+          @user.valid?
+          expect(@user.errors.full_messages).to include "Password is invalid"
+      end
+      it 'passwordは数字だけでは登録できない' do
+        @user.password = '000000'
+        @user.password_confirmation = '000000'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "Password is invalid"
+      end
+      it 'passwordに全角文字が含まれている場合は登録できない' do
+        @user.password = '00000あ'
+        @user.password_confirmation = '00000あ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "Password is invalid"
+      end
+      it 'family_nameに半角カタカナが含まれている場合は登録できない' do
+        @user.family_name = 'ｱｲ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "Family name is invalid"        
+      end
+      it 'first_nameに半角カタカナが含まれている場合は登録できない' do
+        @user.first_name = 'ｱｲ'
+        @user.valid?
+         expect(@user.errors.full_messages).to include "First name is invalid"
+      end
+      it 'family_name_kanaに半角カタカナが含まれている場合は登録できない' do
+        @user.family_name = 'ｱｲ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "Family name is invalid"
+      end
+      it 'first_name_kanaに半角カタカナが含まれている場合は登録できない' do
+        @user.first_name = 'ｱｲ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "First name is invalid"
       end
     end
   end
