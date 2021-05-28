@@ -75,6 +75,11 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
       end
+      it "emailに@がない場合は登録できないこと " do
+        @user.email = 'test'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "Email is invalid"
+      end
     end
   end
 end
