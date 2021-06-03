@@ -130,10 +130,8 @@
 
       <% @items.each do |item| %>
         <li class='list'>
-      <li class='list'>
-        <%= link_to "#" do %>
         <div class='item-img-content'>
-          <%= image_tag "item-sample.png", class: "item-img" %>
+          <%= image_tag item.image, class: "item-img"%>
 
           <%# 商品が売れていればsold outを表示しましょう %>
           <div class='sold-out'>
@@ -144,7 +142,7 @@
         </div>
         <div class='item-info'>
           <h3 class='item-name'>
-            <%= "商品名" %>
+            <%= item.item_name %>
           </h3>
           <div class='item-price'>
             <span><%= item.price %>円<br><%= item.shipping_charge.name  %></span>
@@ -154,11 +152,10 @@
             </div>
           </div>
         </div>
-
         </li>
       <% end %>
-      
-     <% if @items.length == 0 %>
+
+      <% if @items.length == 0 %>
       <li class='list'>
         <%= link_to '#' do %>
         <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
