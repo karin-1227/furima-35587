@@ -67,6 +67,11 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is not a number")
       end
+      it '販売価格は、¥300~¥9,999,999の間でないと出品できない' do
+        @item.price = '100'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price must be greater than 300")
+      end
     end
   end
 end
