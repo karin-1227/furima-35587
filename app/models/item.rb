@@ -14,6 +14,7 @@ class Item < ApplicationRecord
   end
 
   belongs_to :user
+  has_many :purchase_management
 
   has_one_attached :image
   belongs_to :category 

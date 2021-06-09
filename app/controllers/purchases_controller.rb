@@ -1,12 +1,12 @@
 class PurchasesController < ApplicationController
+  before_action :set_item
+  before_action :sold_out_item, only: [:index]
 
   def index
-    @item = Item.find(params[:item_id])
     @product_purchase = ProductPurchase.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @product_purchase = ProductPurchase.new(purchase_params)
     if @product_purchase.valid?
       pay_item
@@ -18,6 +18,10 @@ class PurchasesController < ApplicationController
   end
 
   private
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
 
   def purchase_params
     params.require(:product_purchase).permit(:postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
@@ -31,4 +35,8 @@ class PurchasesController < ApplicationController
       currency: 'jpy'                 # 通貨の種類（日本円）
     )
   end
+
+  def sold_out_item
+    redirect_to root_path if @item.purchase_management.present?
+   end
 end
