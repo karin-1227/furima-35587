@@ -5,7 +5,7 @@ FactoryBot.define do
     municipality   {'あ'}
     address        {'あ'}
     building_name  {'い'}
-    phone_number   {12312341234}
+    phone_number   {'12312341234'}
     token {"tok_abcdefghijk00000000000000000"}
   end
 end

@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe ProductPurchase, type: :model do
   describe '商品の購入' do
     before do
-      @product_purchase = FactoryBot.build(:product_purchase)
+      user = FactoryBot.create(:user)
+      item = FactoryBot.create(:item)
+      @product_purchase = FactoryBot.build(:product_purchase, user_id: user.id, item_id: item.id)
+      sleep(1)
     end
     context '商品の購入ができる場合' do
       it 'postal_code, prefecture_id, municipality, address, building_name, phone_number, tokenが存在すれば購入できる' do
@@ -62,9 +65,19 @@ RSpec.describe ProductPurchase, type: :model do
         expect(@product_purchase.errors.full_messages).to include("Phone number is invalid")
       end
       it 'prefecture_idが空だと購入できないこと' do
-        @product_purchase.prefecture_id = '0'
+        @product_purchase.prefecture_id = 0
         @product_purchase.valid?
         expect(@product_purchase.errors.full_messages).to include("Prefecture must be other than 0")
+      end
+      it 'ユーザーが紐付いていなければ購入できない' do 
+        @product_purchase.user_id = nil
+        @product_purchase.valid?
+        expect(@product_purchase.errors.full_messages).to include("User can't be blank")
+      end
+      it '商品が紐付いていなければ購入できない' do 
+        @product_purchase.item_id = nil
+        @product_purchase.valid?
+        expect(@product_purchase.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
