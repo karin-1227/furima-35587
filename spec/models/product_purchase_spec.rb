@@ -51,7 +51,21 @@ RSpec.describe ProductPurchase, type: :model do
         @product_purchase.valid?
         expect(@product_purchase.errors.full_messages).to include("Postal code is invalid")
       end
-      
+      it 'phone_numberが12桁以上だと購入できないこと' do
+        @product_purchase.phone_number = '123456789012'
+        @product_purchase.valid?
+        expect(@product_purchase.errors.full_messages).to include("Phone number is invalid")
+      end
+      it 'phone_numberが英数混合だと購入できないこと' do
+        @product_purchase.phone_number = '12345abcde1'
+        @product_purchase.valid?
+        expect(@product_purchase.errors.full_messages).to include("Phone number is invalid")
+      end
+      it 'prefecture_idが空だと購入できないこと' do
+        @product_purchase.prefecture_id = '0'
+        @product_purchase.valid?
+        expect(@product_purchase.errors.full_messages).to include("Prefecture must be other than 0")
+      end
     end
   end
 end

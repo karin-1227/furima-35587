@@ -22,7 +22,7 @@ class User < ApplicationRecord
   validates :password, format: { with: VALID_PASSWORD_REGEX }
 
     has_many :items
-    has_one :purchase_management 
+    has_many :purchase_managements
 
 
 end
